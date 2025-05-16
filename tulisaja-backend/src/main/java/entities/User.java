@@ -1,20 +1,17 @@
 package entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
 import jakarta.persistence.OneToMany;
-import org.hibernate.annotations.OnDelete;
-
 import java.util.List;
-
-import static org.hibernate.annotations.OnDeleteAction.CASCADE;
+import static jakarta.persistence.FetchType.EAGER;
 
 @Entity
 public class User {
-    @Id
-    private String username;
+    @Id private String username;
     private String hashedPassword;
+    @OneToMany(mappedBy = "user", fetch = EAGER, cascade = CascadeType.ALL) List <Post> post;
 
     public User() {}
 
@@ -31,4 +28,7 @@ public class User {
         return hashedPassword;
     }
 
+    public List<Post> getPosts(){
+        return post;
+    }
 }
