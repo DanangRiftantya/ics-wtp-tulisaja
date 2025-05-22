@@ -1,9 +1,6 @@
 package entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import java.util.List;
 import static jakarta.persistence.FetchType.EAGER;
 
@@ -12,6 +9,7 @@ public class User {
     @Id private String username;
     private String hashedPassword;
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = CascadeType.ALL) List <Post> post;
+
 
     public User() {}
 

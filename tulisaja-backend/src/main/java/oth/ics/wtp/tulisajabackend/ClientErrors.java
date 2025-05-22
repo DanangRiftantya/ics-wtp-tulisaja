@@ -21,4 +21,8 @@ public class ClientErrors {
         logger.error(ExceptionUtils.getMessage(e) + "\n" + ExceptionUtils.getStackTrace(e));
         return e;
     }
+
+    public static ResponseStatusException userNotFound(String username) {
+        return log(new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + username));
+    }
 }

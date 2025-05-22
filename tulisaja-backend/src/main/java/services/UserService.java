@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import repositories.UserRepository;
 import oth.ics.wtp.tulisajabackend.ClientErrors;
 import oth.ics.wtp.tulisajabackend.WeakCrypto;
+import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
@@ -16,6 +18,10 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public List<UserDto> list(){
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false).map(this::toDto).toList();
     }
 
     public UserDto create(CreateUserDto createUser) {
@@ -31,6 +37,13 @@ public class UserService {
         userRepository.save(user);
         return toDto(user);
     }
+
+    public UserDto get(String username) {
+        return userRepository.findByUsername(username)
+                .map(this::toDto)
+                .orElseThrow(() -> ClientErrors.userNotFound(username));
+    }
+
 
     private UserDto toDto(User user) {
         return new UserDto(user.getUsername());
