@@ -25,4 +25,8 @@ public class ClientErrors {
     public static ResponseStatusException userNotFound(String username) {
         return log(new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found: " + username));
     }
+
+    public static ResponseStatusException unauthorized() {
+        return log(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
+    }
 }
