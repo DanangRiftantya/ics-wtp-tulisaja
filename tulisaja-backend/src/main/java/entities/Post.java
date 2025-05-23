@@ -15,7 +15,7 @@ public class Post {
     @ManyToOne @OnDelete(action = CASCADE) private User user;
     private Instant creationTime;
 
-    public Post() {}
+//    public Post() {}
 
     public Post(String post) {
         this.post = post;

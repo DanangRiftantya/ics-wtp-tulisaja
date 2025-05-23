@@ -11,7 +11,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = EAGER, cascade = CascadeType.ALL) List <Post> post;
 
 
-    public User() {}
+//    public User() {}
 
     public User (String username, String hashedPassword) {
         this.username = username;

@@ -25,13 +25,13 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDto createUser(@RequestBody CreateUserDto createUser) {
         return userService.create(createUser);
     }
 
     @SecurityRequirement(name = "basicAuth")
-    @PostMapping(value = "users/login")
+    @PostMapping(value = "user/login")
     public UserDto logIn(HttpServletRequest request) {
         User user = authService.logIn(request);
         return userService.get(user.getUsername());
