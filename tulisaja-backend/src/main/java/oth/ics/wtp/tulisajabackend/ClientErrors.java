@@ -29,4 +29,8 @@ public class ClientErrors {
     public static ResponseStatusException unauthorized() {
         return log(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized"));
     }
+
+    public static ResponseStatusException userCannotFollowOwn(String followerUsername) {
+        return log(new ResponseStatusException(HttpStatus.FORBIDDEN, "User cannot follow or unfollow themselves"));
+    }
 }
