@@ -9,6 +9,7 @@ import oth.ics.wtp.tulisajabackend.repositories.UserRepository;
 import oth.ics.wtp.tulisajabackend.ClientErrors;
 import oth.ics.wtp.tulisajabackend.WeakCrypto;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -76,16 +77,16 @@ public class UserService {
         }
     }
 
-    public List<User> getFollowers(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> ClientErrors.userNotFound(username));
-        return user.getFollowers();
+    public List<UserDto> listFollowers(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> ClientErrors.userNotFound(username));
+
+        return user.getFollowers().stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    public List<User> getFollowing(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> ClientErrors.userNotFound(username));
-        return user.getFollowing();
+    public List<UserDto> listFollowing(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> ClientErrors.userNotFound(username));
+
+        return user.getFollowing().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     private UserDto toDto(User user) {

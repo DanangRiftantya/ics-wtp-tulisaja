@@ -1,5 +1,7 @@
 package oth.ics.wtp.tulisajabackend.controllers;
 
+
+import org.springframework.http.ResponseEntity;
 import oth.ics.wtp.tulisajabackend.dtos.CreateUserDto;
 import oth.ics.wtp.tulisajabackend.dtos.UserDto;
 import oth.ics.wtp.tulisajabackend.entities.User;
@@ -11,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import oth.ics.wtp.tulisajabackend.services.AuthService;
 import oth.ics.wtp.tulisajabackend.services.UserService;
+
+import java.util.List;
+
 
 @RestController
 public class UserController {
@@ -24,7 +29,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDto createUser(@RequestBody CreateUserDto createUser) {
         return userService.create(createUser);
     }
@@ -46,5 +51,27 @@ public class UserController {
     @GetMapping(value = "users/search/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto searchUser(@PathVariable String username) {
         return userService.get(username);
+    }
+
+    @PostMapping(value = "users/{followerId}/follow/{followedId}")
+    public ResponseEntity<String> followUser (@PathVariable String followerId, @PathVariable String followedId) {
+        userService.followUser(followerId, followedId);
+        return ResponseEntity.ok("Followed successfully"); // HTTP 200 response
+    }
+
+    @PostMapping (value = "user/{followerId}/unfollow/{followedId}")
+    public ResponseEntity<String> unfollowUser (@PathVariable String followerId, @PathVariable String followedId) {
+        userService.unfollowUser(followerId, followedId);
+        return ResponseEntity.ok("Unfollowed successfully");
+    }
+
+    @GetMapping(value = "user/following", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDto> listFollowing (@PathVariable String username) {
+        return userService.listFollowing(username);
+    }
+
+    @GetMapping (value = "user/followers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDto> listFollowers (@PathVariable String username) {
+        return userService.listFollowers(username);
     }
 }
