@@ -33,4 +33,8 @@ public class ClientErrors {
     public static ResponseStatusException userCannotFollowOwn(String followerUsername) {
         return log(new ResponseStatusException(HttpStatus.FORBIDDEN, "User cannot follow or unfollow themselves"));
     }
+
+    public static ResponseStatusException postNotFound(long id) {
+        return log(new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found: " + id));
+    }
 }

@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import oth.ics.wtp.tulisajabackend.services.AuthService;
 import oth.ics.wtp.tulisajabackend.services.UserService;
-
 import java.util.List;
 
 
@@ -74,4 +73,9 @@ public class UserController {
     public List<UserDto> listFollowers (@PathVariable String username) {
         return userService.listFollowers(username);
     }
+
+//    @DeleteMapping(value = "users/delete-post")
+//    public ResponseEntity<String> deletePost(@PathVariable String username) {
+//
+//    }
 }

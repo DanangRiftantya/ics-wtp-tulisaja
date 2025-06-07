@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ics-wtp-tulisaja.iml" filepath="$PROJECT_DIR$/.idea/ics-wtp-tulisaja.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tulisaja-frontend/tulisaja-frontend.iml" filepath="$PROJECT_DIR$/tulisaja-frontend/tulisaja-frontend.iml" />
     </modules>
   </component>
 </project>
