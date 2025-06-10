@@ -18,7 +18,7 @@ public class User {
     List <Post> post;
 
     // User that this user is following
-    @ManyToMany
+    @ManyToMany (fetch = EAGER)
     @JoinTable(name = "user_following",
                 joinColumns = @JoinColumn(name = "follower_id"),
                 inverseJoinColumns = @JoinColumn(name = "followed_id")
@@ -54,5 +54,18 @@ public class User {
 
     public List<User> getFollowers() {
         return followers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return username != null && username.equals(user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return username != null ? username.hashCode() : 0;
     }
 }

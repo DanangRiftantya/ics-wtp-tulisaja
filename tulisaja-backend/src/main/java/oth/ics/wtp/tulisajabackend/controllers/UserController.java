@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import oth.ics.wtp.tulisajabackend.repositories.UserRepository;
 import oth.ics.wtp.tulisajabackend.services.AuthService;
 import oth.ics.wtp.tulisajabackend.services.UserService;
 import java.util.List;
@@ -20,11 +21,13 @@ import java.util.List;
 public class UserController {
     private final AuthService authService;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(AuthService authService, UserService userService) {
+    public UserController(AuthService authService, UserService userService, UserRepository userRepository) {
         this.authService = authService;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -64,18 +67,18 @@ public class UserController {
         return ResponseEntity.ok("Unfollowed successfully");
     }
 
-    @GetMapping(value = "user/following", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "user/{username}/following", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDto> listFollowing (@PathVariable String username) {
         return userService.listFollowing(username);
     }
 
-    @GetMapping (value = "user/followers", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping (value = "user/{username}/followers", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDto> listFollowers (@PathVariable String username) {
         return userService.listFollowers(username);
     }
 
-//    @DeleteMapping(value = "users/delete-post")
-//    public ResponseEntity<String> deletePost(@PathVariable String username) {
-//
-//    }
+    @GetMapping(value = "user/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto getUser(HttpServletRequest request, @PathVariable("username") String username) {
+        return userService.get(username);
+    }
 }
